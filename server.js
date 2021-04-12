@@ -11,7 +11,8 @@ require('./controllers/posts.js')(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(expressValidator());
-
+// Set db
+require('./data/reddit-db')
 
 //Middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
