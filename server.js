@@ -1,11 +1,17 @@
 // Library requirements
 const express = require('express');
 const exphbs = require('express-handlebars');
-require('./controllers/posts.js')(app);
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 
 //app setup
 const app = express()
 const port = 3000
+require('./controllers/posts.js')(app);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false}));
+app.use(expressValidator());
+
 
 //Middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
