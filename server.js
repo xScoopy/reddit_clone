@@ -1,6 +1,7 @@
 // Library requirements
 const express = require('express');
 const exphbs = require('express-handlebars');
+require('./controllers/posts.js')(app);
 
 //app setup
 const app = express()
