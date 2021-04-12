@@ -7,18 +7,19 @@ const expressValidator = require('express-validator');
 //app setup
 const app = express()
 const port = 3000
-require('./controllers/posts.js')(app);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(expressValidator());
-// Set db
-require('./data/reddit-db')
+
 
 //Middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-
+require('./controllers/posts.js')(app);
+// Set db
+require('./data/reddit-db')
 //routes
 app.get('/', (req, res) => {
     res.render('home')
