@@ -13,7 +13,7 @@ app.set('view engine', 'handlebars');
 
 //routes
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.render('home')
 })
 
 
