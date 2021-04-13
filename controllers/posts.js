@@ -32,4 +32,7 @@ module.exports = app => {
             console.log(err.message);
           });
       });
+    app.get("/n/:subreddit", function(req,res) {
+      console.log(req.params.subreddit);
+    })
 };
