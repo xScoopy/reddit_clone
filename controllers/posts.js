@@ -33,6 +33,12 @@ module.exports = app => {
           });
       });
     app.get("/n/:subreddit", function(req,res) {
-      console.log(req.params.subreddit);
-    })
+      Post.find({ subreddit: req.params.subreddit }).lean()
+        .then(posts => {
+          res.render("posts-index", { posts });
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    });
 };
