@@ -21,9 +21,7 @@ require('./controllers/posts.js')(app);
 // Set db
 require('./data/reddit-db')
 
-app.get('/posts/new', (req, res) => {
-    res.render('posts-new')
-})
+
 
 //Server start
 app.listen(port, () => {
