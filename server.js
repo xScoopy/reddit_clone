@@ -27,3 +27,5 @@ require('./data/reddit-db')
 app.listen(port, () => {
     console.log(`Example app listening at port ${port}`)
 })
+
+module.exports = app;

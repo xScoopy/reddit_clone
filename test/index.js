@@ -1,7 +1,7 @@
 const app = require("./../server");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const should = shai.should();
+const should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -19,6 +19,6 @@ describe("site", function() {
             }
             res.status.should.be.equal(200);
             return done(); //call done if the test completed successfully
-        })
-    })
-})
+        });
+    });
+});
