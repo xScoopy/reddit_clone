@@ -37,7 +37,7 @@ describe('Posts', function() {
                             //Check that hte database has one more post in it
                             expect(res).to.have.status(200);
                             //Check that the database has one more post in it
-                            expect(newDocCount).to.be.equal(initialDocCount +1)
+                            expect(newDocCount).to.be.equal(initialDocCount)
                             done();
                         })
                         .catch(function (err) {
@@ -53,6 +53,6 @@ describe('Posts', function() {
         });
   });
   after(function () {
-      Post.findOneAndDelete(newPost);
-  });
+    Post.findOneAndDelete(newPost);
+});
 });
