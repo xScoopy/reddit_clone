@@ -1,4 +1,5 @@
 // Library requirements
+require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
@@ -15,7 +16,7 @@ app.use(expressValidator());
 
 //Middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+app.set('view sengine', 'handlebars');
 
 require('./controllers/posts.js')(app);
 require('./controllers/comments.js')(app);
