@@ -16,7 +16,7 @@ app.use(expressValidator());
 
 //Middleware
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view sengine', 'handlebars');
+app.set('view engine', 'handlebars');
 
 require('./controllers/posts.js')(app);
 require('./controllers/comments.js')(app);
