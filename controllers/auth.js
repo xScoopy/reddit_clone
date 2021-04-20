@@ -7,6 +7,11 @@ module.exports = (app) => {
     app.get("/sign-up", (req, res) => {
         res.render("sign-up");
     });
+    //LOGOUT GET
+    app.get('/logout', (req,res) => {
+        res.clearCookie('nToken');
+        res.redirect('/');
+    })
     // SIGN UP POST
     app.post("/sign-up", (req, res) => {
         // Create User
