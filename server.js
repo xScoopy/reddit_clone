@@ -6,8 +6,11 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
 //app setup
+let cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const app = express()
 const port = 3000
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
