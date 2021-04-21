@@ -1,10 +1,10 @@
 const Post = require('../models/post');
 
 module.exports = app => {
+  //POST REQUESTS
   app.post("/posts/new", (req, res) => {
     if (req.user) {
       const post = new Post(req.body);
-  
       post.save(function(err, post) {
         return res.redirect(`/`);
       });
@@ -12,6 +12,7 @@ module.exports = app => {
       return res.status(401); // UNAUTHORIZED
     }
   });
+ 
   app.get('/', (req, res) => {
     let currentUser = req.user;
     Post.find({}).lean()
@@ -22,9 +23,15 @@ module.exports = app => {
         console.log(err.message);
       })
   });
+
   app.get('/posts/new', (req, res) => {
-    res.render('posts-new')
+    if (req.user) {
+      res.render('posts-new')
+    } else {
+      res.render('login');
+    }
   });
+
   app.get("/posts/:id", function (req, res) {
     // LOOK UP THE POST
     Post.findById(req.params.id).lean().populate('comments').then((post) => {
@@ -33,6 +40,7 @@ module.exports = app => {
       console.log(err.message)
     })
   });
+
   app.get("/n/:subreddit", function (req, res) {
     Post.find({ subreddit: req.params.subreddit }).lean()
       .then(posts => {
