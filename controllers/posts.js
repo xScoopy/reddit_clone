@@ -28,9 +28,10 @@ module.exports = app => {
  
   app.get('/', (req, res) => {
     let currentUser = req.user;
-    Post.find({}).lean()
+    console.log(req.cookies);
+    Post.find({}).lean().populate('author')
       .then(posts => {
-        res.render('posts-index', { posts });
+        res.render('posts-index', { posts, currentUser});
       })
       .catch(err => {
         console.log(err.message);
@@ -39,7 +40,8 @@ module.exports = app => {
 
   app.get('/posts/new', (req, res) => {
     if (req.user) {
-      res.render('posts-new')
+      let currentUser = req.user
+      res.render('posts-new', {currentUser})
     } else {
       res.render('login');
     }
@@ -47,7 +49,8 @@ module.exports = app => {
 
   app.get("/posts/:id", function (req, res) {
     // LOOK UP THE POST
-    Post.findById(req.params.id).lean().populate('comments').then((post) => {
+    let currentUser = req.user
+    Post.findById(req.params.id).lean().populate('comments').populate('author').then((post) => {
       res.render('posts-show', { post, currentUser })
     }).catch((err) => {
       console.log(err.message)
@@ -55,9 +58,10 @@ module.exports = app => {
   });
 
   app.get("/n/:subreddit", function (req, res) {
-    Post.find({ subreddit: req.params.subreddit }).lean()
+    let currentUser = req.user
+    Post.find({ subreddit: req.params.subreddit }).lean().populate('author')
       .then(posts => {
-        res.render("posts-index", { posts});
+        res.render("posts-index", { posts, currentUser});
       })
       .catch(err => {
         console.log(err)

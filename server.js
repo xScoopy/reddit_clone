@@ -25,7 +25,7 @@ var checkAuth = (req, res, next) => {
       var decodedToken = jwt.decode(token, { complete: true }) || {};
       req.user = decodedToken.payload;
     }
-  
+    console.log(req.user)
     next();
   };
 app.use(checkAuth);
