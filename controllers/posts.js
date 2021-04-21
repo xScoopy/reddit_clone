@@ -2,15 +2,18 @@ const Post = require('../models/post');
 
 module.exports = app => {
   app.post("/posts/new", (req, res) => {
-    const post = new Post(req.body);
-
-    //Save instance of post model to db
-    post.save((err, post) => {
-      //redirect to root
-      return res.redirect('/');
-    })
+    if (req.user) {
+      const post = new Post(req.body);
+  
+      post.save(function(err, post) {
+        return res.redirect(`/`);
+      });
+    } else {
+      return res.status(401); // UNAUTHORIZED
+    }
   });
   app.get('/', (req, res) => {
+    let currentUser = req.user;
     Post.find({}).lean()
       .then(posts => {
         res.render('posts-index', { posts });
@@ -25,7 +28,7 @@ module.exports = app => {
   app.get("/posts/:id", function (req, res) {
     // LOOK UP THE POST
     Post.findById(req.params.id).lean().populate('comments').then((post) => {
-      res.render('posts-show', { post })
+      res.render('posts-show', { post, currentUser })
     }).catch((err) => {
       console.log(err.message)
     })
@@ -33,7 +36,7 @@ module.exports = app => {
   app.get("/n/:subreddit", function (req, res) {
     Post.find({ subreddit: req.params.subreddit }).lean()
       .then(posts => {
-        res.render("posts-index", { posts });
+        res.render("posts-index", { posts});
       })
       .catch(err => {
         console.log(err)
