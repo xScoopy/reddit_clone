@@ -1,13 +1,26 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 
 module.exports = app => {
   //POST REQUESTS
   app.post("/posts/new", (req, res) => {
     if (req.user) {
       const post = new Post(req.body);
-      post.save(function(err, post) {
-        return res.redirect(`/`);
-      });
+      post.author = req.user._id;
+      post
+        .save()
+        .then(post => {
+            return User.findById(req.user._id);
+        })
+        .then(user => {
+            user.posts.unshift(post);
+            user.save();
+            // REDIRECT TO THE NEW POST
+            res.redirect(`/posts/${post._id}`);
+        })
+        .catch(err => {
+            console.log(err.message);
+        });
     } else {
       return res.status(401); // UNAUTHORIZED
     }
