@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const User = require('../models/user');
+const { listeners } = require('../server');
 
 module.exports = app => {
   //POST REQUESTS
@@ -48,24 +49,23 @@ module.exports = app => {
   });
 
   app.get("/posts/:id", function (req, res) {
-    // LOOK UP THE POST
-    let currentUser = req.user
-    Post.findById(req.params.id).lean().populate({path:'comments', populate: {path: 'author'}}).populate('author').then((post) => {
-      res.render('posts-show', { post, currentUser })
-    }).catch((err) => {
-      console.log(err.message)
-    })
+    let currentUser = req.user;
+    Post.findById(req.params.id).populate('comments').lean()
+        .then(post => {
+            res.render("posts-show", { post, currentUser });  
+        })
+        .catch(err => {
+            console.log(err.message);
+        });
   });
 
   app.get("/n/:subreddit", function (req, res) {
-    let currentUser = req.user
-    Post.find({ subreddit: req.params.subreddit }).lean().populate('author')
-      .then(posts => {
-        res.render("posts-index", { posts, currentUser});
-      })
-      .catch(err => {
-        console.log(err)
-      });
-  });
-
-};
+    var currentUser = req.user;
+    Post.find({ subreddit: req.params.subreddit }).lean()
+        .then(posts => {
+            res.render("posts-index", { posts, currentUser });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
