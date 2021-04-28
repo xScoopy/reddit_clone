@@ -69,3 +69,4 @@ module.exports = app => {
             console.log(err);
         });
 });
+}
