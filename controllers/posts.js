@@ -1,6 +1,5 @@
 const Post = require('../models/post');
 const User = require('../models/user');
-const { listeners } = require('../server');
 
 module.exports = app => {
   //POST REQUESTS

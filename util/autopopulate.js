@@ -1,5 +1,5 @@
 module.exports = field => {
-    return () => {
+    return function(next) {
         this.populate(field);
         next();
     }
