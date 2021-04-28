@@ -1,5 +1,6 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
+
 module.exports = function (app) {
   // CREATE Comment
   app.post("/posts/:postId/comments", function (req, res) {
